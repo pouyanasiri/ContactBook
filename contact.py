@@ -22,8 +22,35 @@ class Notebook:
         key = my_person.get_first_name()+ " " + my_person.get_last_name()
         value = [my_person.get_email(),my_person.get_phone_numbers()]
         self.people[key] = value
+    def display_sort_menu(self):
+        print("      Sort menu\n")
+        print("***1 : Sort by name")
+        print("***2 : Back")
+        print("***3 : Exit")
+        number = int(input("Enter your choice ? "))
 
+        if number == 1:
+            self.sort_by_name()
 
+        elif number == 2:
+            return
+
+        elif number == 3:
+            exit()
+
+        else:
+            print("Wrong input ")
+
+        self.display_sort_menu()
+        
+
+    def sort_by_name(self):
+        countr = 1
+        for key in sorted(self.people.keys()):
+            print (f"{countr} : \nname : {key} \nemail : {self.people[key][0]}\nphone : {self.people[key][1]}")
+            countr+=1
+        
+        
     def display_search_menu(self):
         print("      Search menu\n")
         print("***1 : Search by first name")
@@ -126,7 +153,7 @@ class Notebook:
         pass
 
     def sort(self):
-        pass
+        self.display_sort_menu()
 
     def desplay_menu(self):
 

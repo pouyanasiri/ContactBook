@@ -2,7 +2,7 @@ from person import Person
 
 
 class Notebook:
-
+    
     def __init__(self):
         self.people = dict()
         
@@ -24,11 +24,64 @@ class Notebook:
         self.people[key] = value
 
 
+    def display_search_menu(self):
+        print("      Search menu     ")
+        print("* 1 : Search by first name*")
+        print("* 2 : Search by last name*")
+        print("* 3 : Search by whole name*")
+        print("* 4 : Search by email*")
+        print("* 5 : Search by number*")
+        print("* 6 : Back*")
+        print("* 7 : Exit*")
+
+        number = int(input("Enter your choice ? "))
+
+        if number == 1:
+            self.search_by_first_name()
+
+        elif number == 2:
+            self.search_by_last_name()
+
+        elif number == 3:
+            self.search_by_whole_name()
+
+        elif number == 4:
+            self.search_by_email()
+
+        elif number == 5:
+            self.search_by_phone_number()
+
+        elif number == 6:
+            return
+
+        elif number == 7:
+            exit()
+        else:
+            print("Wrong input ")
+
+        self.display_search_menu()
+
+    def search_by_first_name():
+        pass
+
+    def search_by_last_name():
+        pass
+
+    def search_by_whole_name():
+        pass
+
+    def search_by_email():
+        pass
+
+    def search_by_phone_number():
+        pass
+    
+    
     def remove_contact(self):
         pass
 
     def search_contact(self):
-        pass
+        self.display_search_menu()
 
     def edit_contact(self):
         pass

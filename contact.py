@@ -25,14 +25,14 @@ class Notebook:
 
 
     def display_search_menu(self):
-        print("      Search menu     ")
-        print("* 1 : Search by first name*")
-        print("* 2 : Search by last name*")
-        print("* 3 : Search by whole name*")
-        print("* 4 : Search by email*")
-        print("* 5 : Search by number*")
-        print("* 6 : Back*")
-        print("* 7 : Exit*")
+        print("      Search menu\n")
+        print("***1 : Search by first name")
+        print("***2 : Search by last name")
+        print("***3 : Search by whole name")
+        print("***4 : Search by email")
+        print("***5 : Search by number")
+        print("***6 : Back")
+        print("***7 : Exit")
 
         number = int(input("Enter your choice ? "))
 
@@ -62,45 +62,60 @@ class Notebook:
         self.display_search_menu()
 
     def search_by_first_name(self):
-        first_name = input("enter the first name of your contact : ").title()
+        first_name = input("Enter the first name of your contact : ").title()
         find = 0 
         for key in self.people.keys():
             if key.split(" ")[0] == first_name :
-                print(f"\n\tE-mail : {self.people[key][0]}  numbers : {self.people[key][1]}\n")
+                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
             print("Not found")
 
     def search_by_last_name(self):
-        last_name = input("enter the last name of your contact : ").title()
+        last_name = input("Enter the last name of your contact : ").title()
         find = 0 
         for key in self.people.keys():
             if key.split(" ")[1] == last_name :
-                print(f"\n\tE-mail : {self.people[key][0]}  numbers : {self.people[key][1]}\n")
+                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
             print("Not found")
 
 
     def search_by_whole_name(self):
-        name = input("enter the name of your contact : ").title()
+        name = input("Enter the name of your contact : ").title()
         find = 0 
         for key in self.people.keys():
             if key == name :
-                print(f"\n\tE-mail : {self.people[key][0]}  numbers : {self.people[key][1]}\n")
+                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
             print("Not found")
 
 
 
-    def search_by_email():
-        pass
+    def search_by_email(self):
+        email = input("Enter the Email of your contact : ")
+        find=0
+        for key in self.people:
+            if self.people[key][0] == email :
+                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
+                find=1
+        if find == 0:
+            print("Not found")
 
-    def search_by_phone_number():
-        pass
-    
-    
+
+    def search_by_phone_number(self):
+        phine_number = input("Enter the number of phone of your contact : ")
+        find=0
+        for key in self.people:
+            if phine_number in self.people[key][1]  :
+                find=1
+                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
+        if find == 0:
+            print("Not found")
+
+
     def remove_contact(self):
         pass
 

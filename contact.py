@@ -61,14 +61,38 @@ class Notebook:
 
         self.display_search_menu()
 
-    def search_by_first_name():
-        pass
+    def search_by_first_name(self):
+        first_name = input("enter the first name of your contact : ").title()
+        find = 0 
+        for key in self.people.keys():
+            if key.split(" ")[0] == first_name :
+                print(f"\n\tE-mail : {self.people[key][0]}  numbers : {self.people[key][1]}\n")
+                find=1
+        if find == 0:
+            print("Not found")
 
-    def search_by_last_name():
-        pass
+    def search_by_last_name(self):
+        last_name = input("enter the last name of your contact : ").title()
+        find = 0 
+        for key in self.people.keys():
+            if key.split(" ")[1] == last_name :
+                print(f"\n\tE-mail : {self.people[key][0]}  numbers : {self.people[key][1]}\n")
+                find=1
+        if find == 0:
+            print("Not found")
 
-    def search_by_whole_name():
-        pass
+
+    def search_by_whole_name(self):
+        name = input("enter the name of your contact : ").title()
+        find = 0 
+        for key in self.people.keys():
+            if key == name :
+                print(f"\n\tE-mail : {self.people[key][0]}  numbers : {self.people[key][1]}\n")
+                find=1
+        if find == 0:
+            print("Not found")
+
+
 
     def search_by_email():
         pass

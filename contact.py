@@ -119,8 +119,6 @@ class Notebook:
         if find == 0:
             print("Not found")
 
-
-
     def search_by_email(self):
         email = input("Enter the Email of your contact : ")
         find=0

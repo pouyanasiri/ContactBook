@@ -1,20 +1,57 @@
-from person import Person
-
+from person import Person   
+from os import stat, system, name
+import time
+def clear():
+      
+    if name == 'nt':
+        _ = system('cls')
+  
+    else:
+        _ = system('clear')
 
 class Notebook:
-    
+
     def __init__(self):
         self.people = dict()
+
+################################################################            
+################################################################  SHOW CONTACTS        
+################################################################        
         
     def show_notebook(self):
-        print(self.people)
-    
+        countr = 1
+        for key , value in self.people.items():
+            print (f"{countr} --> name : {key} , email : {value[0]} , phone(phones) : {value[1]} ")
+            countr+=1
+        if len(self.people) == 0 :
+            print("the note book is empty")
+        time.sleep(3)
+        
+        
+
+################################################################            
+################################################################  ADD CONTACT        
+################################################################                    
+            
     def add_contact(self):
 
         first_name = input("please enter your first name : ").title()
+        clear()
         last_name = input("please enter your last name : ").title()
-        email = input("please enter your email : ")
-
+        clear()
+        yes_no = "n"
+        email = "______"
+        while(yes_no != "n" or yes_no != "y"):
+            yes_no = input("Do you want to add email? (y/n) : ")
+        
+            if (yes_no == "y"):
+                email = input("please enter your email : ")
+                if "@" not in email:
+                    print("Sorry, the email is invalid !!!")
+                    continue
+                
+            break
+                    
         my_person = Person(first_name , last_name , email) 
 
         my_person.add_phone_numbers()
@@ -22,13 +59,19 @@ class Notebook:
         key = my_person.get_first_name()+ " " + my_person.get_last_name()
         value = [my_person.get_email(),my_person.get_phone_numbers()]
         self.people[key] = value
+        
+################################################################            
+################################################################  MENU OF SORT
+################################################################                
+
     def display_sort_menu(self):
         print("      Sort menu\n")
         print("***1 : Sort by name")
         print("***2 : Back")
         print("***3 : Exit")
+        
         number = int(input("Enter your choice ? "))
-
+        clear()
         if number == 1:
             self.sort_by_name()
 
@@ -43,14 +86,24 @@ class Notebook:
 
         self.display_sort_menu()
         
-
+################################################################            
+################################################################  SORT CONTACTS
+################################################################      
+  
     def sort_by_name(self):
         countr = 1
         for key in sorted(self.people.keys()):
             print (f"{countr} : \nname : {key} \nemail : {self.people[key][0]}\nphone : {self.people[key][1]}")
             countr+=1
+            
+            
+    def search_contact(self):
+        self.display_search_menu()    
         
-        
+################################################################            
+################################################################  MENU OF SEARCH 
+################################################################        
+
     def display_search_menu(self):
         print("      Search menu\n")
         print("***1 : Search by first name")
@@ -62,7 +115,8 @@ class Notebook:
         print("***7 : Exit")
 
         number = int(input("Enter your choice ? "))
-
+        clear()
+        
         if number == 1:
             self.search_by_first_name()
 
@@ -87,11 +141,15 @@ class Notebook:
             print("Wrong input ")
 
         self.display_search_menu()
+        
+################################################################            
+################################################################  SEARCH METHODS
+################################################################        
 
     def search_by_first_name(self):
         first_name = input("Enter the first name of your contact : ").title()
         find = 0 
-        for key in self.people.keys():
+        for key  in self.people.keys():
             if key.split(" ")[0] == first_name :
                 print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
@@ -101,7 +159,7 @@ class Notebook:
     def search_by_last_name(self):
         last_name = input("Enter the last name of your contact : ").title()
         find = 0 
-        for key in self.people.keys():
+        for key  in self.people.keys():
             if key.split(" ")[1] == last_name :
                 print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
@@ -124,7 +182,7 @@ class Notebook:
         find=0
         for key in self.people:
             if self.people[key][0] == email :
-                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
+                print(f"\n\tname : {key}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
             print("Not found")
@@ -136,22 +194,52 @@ class Notebook:
         for key in self.people:
             if phine_number in self.people[key][1]  :
                 find=1
-                print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
+                print(f"\n\tname : {key}  email : {self.people[key][0]}\n")
         if find == 0:
             print("Not found")
 
-
+################################################################            
+################################################################  REMOVE CONTACT
+################################################################   
+     
     def remove_contact(self):
-        pass
-
-    def search_contact(self):
-        self.display_search_menu()
+        self.show_notebook()
+        number = input("Please enter the number of contact (Between the list above) :‌ ")
+        check_correct_number = 0
+        if not number.isnumeric():
+            check_correct_number = 1
+        elif not int(number) <= len(self.people):
+            check_correct_number = 1
+        
+        if check_correct_number == 1:
+            print("the number is incorrct!\n try again !!!")
+            time.sleep(2)
+            clear()
+            self.remove_contact()
+        
+        else :
+            countr = 1
+            clear()
+            for key in self.people:
+                if countr == int(number) :
+                    del self.people[key]
+                    print("the contact is deleted !")
+                    time.sleep(2)
+                    break
+                countr+=1
+            self.show_notebook()
+            time.sleep(3)
+        
 
     def edit_contact(self):
         pass
 
     def sort(self):
         self.display_sort_menu()
+        
+################################################################            
+################################################################  MAIN MENU
+################################################################        
 
     def desplay_menu(self):
 

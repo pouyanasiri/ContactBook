@@ -1,6 +1,7 @@
 from person import Person   
 from os import stat, system, name
 import time
+
 def clear():
       
     if name == 'nt':
@@ -229,11 +230,186 @@ class Notebook:
                 countr+=1
             self.show_notebook()
             time.sleep(3)
-        
+            
+
 
     def edit_contact(self):
-        pass
+        self.display_edit_menu()
+    
+    
+    
+    def display_edit_menu(self):
+        print("      Edit menu\n")
+        print("*** 1 : Edit first name")
+        print("*** 2 : Edit last name")
+        print("*** 3 : Edit email")
+        print("*** 4 : Edit phone number")
+        print("*** 5 : Back ")
+        print("*** 6 : Exit ")
+        
+        number = input("Enter your choice ? ")
+        clear()
+        if number == "1" :
+            self.edit_first_name()
+        
+        elif number == "2" :
+            self.edit_last_name()
+            
+        elif number == "3" :
+            self.edit_email()
+        
+        elif number == "4" :
+            self.edit_phone_numbers()
+            
 
+        elif number == "5" :
+            return
+
+        elif number == "6" :
+            exit()
+        else :
+            print("Incorrect input !\ntry again")
+            time.sleep(2)
+            self.display_edit_menu()
+        
+        
+    def edit_first_name(self):
+        self.show_notebook()
+        number = input("Please enter the number of contact (Between the list above) :‌ ")
+        check_correct_number = 0
+        if not number.isnumeric():
+            check_correct_number = 1
+        elif not int(number) <= len(self.people):
+            check_correct_number = 1
+        
+        if check_correct_number == 1:
+            print("the number is incorrct!\n try again !!!")
+            time.sleep(2)
+            clear()
+            self.edit_first_name()
+        
+        else :
+            countr = 1
+            clear()
+            for key in self.people:
+                if countr == int(number) :
+                    new_name = input("please enter the new first name : ").title()
+                    new_name = new_name + key[key.find(" ") + 1 :]
+                    self.people[new_name] = self.people[key]
+                    del self.people[key]
+                    print("the contact is edited !")
+                    time.sleep(2)
+                    break
+                countr+=1
+            self.show_notebook()
+            time.sleep(3)
+        
+    def edit_last_name(self):
+        self.show_notebook()
+        number = input("Please enter the number of contact (Between the list above) :‌ ")
+        check_correct_number = 0
+        if not number.isnumeric():
+            check_correct_number = 1
+        elif not int(number) <= len(self.people):
+            check_correct_number = 1
+        
+        if check_correct_number == 1:
+            print("the number is incorrct!\n try again !!!")
+            time.sleep(2)
+            clear()
+            self.edit_last_name()
+        
+        else :
+            countr = 1
+            clear()
+            for key in self.people:
+                if countr == int(number) :
+                    new_name = input("please enter the new last name : ").title()
+                    new_name = key[0 : key.find(" ")] + new_name
+                    self.people[new_name] = self.people[key]
+                    del self.people[key]
+                    print("the contact is edited !")
+                    time.sleep(2)
+                    break
+                countr+=1
+            self.show_notebook()
+            time.sleep(3)
+        
+            
+    def edit_email(self):
+        self.show_notebook()
+        number = input("Please enter the number of contact (Between the list above) :‌ ")
+        check_correct_number = 0
+        if not number.isnumeric():
+            check_correct_number = 1
+        elif not int(number) <= len(self.people):
+            check_correct_number = 1
+        
+        if check_correct_number == 1:
+            print("the number is incorrct!\n try again !!!")
+            time.sleep(2)
+            clear()
+            self.edit_email()
+        
+        else :
+            countr = 1
+            clear()
+            for key in self.people:
+                if countr == int(number) :
+                    while True:
+                        new_email = input("please enter the new email : ")
+                        if "@" in new_email:
+                            break
+                        print("Incorrect email !\ntry again")
+                    self.people[key] = [new_email,self.people[key][1]]
+                    print("email edited")
+                    break
+                countr+=1
+            self.show_notebook()
+            time.sleep(3)
+        
+    
+    def edit_phone_numbers(self):
+        self.show_notebook()
+        number = input("Please enter the number of contact (Between the list above) :‌ ")
+        check_correct_number = 0
+        if not number.isnumeric():
+            check_correct_number = 1
+        elif not int(number) <= len(self.people):
+            check_correct_number = 1
+        
+        if check_correct_number == 1:
+            print("the number is incorrct!\n try again !!!")
+            time.sleep(2)
+            clear()
+            self.edit_phone_numbers()
+        
+        else :
+            countr = 1
+            clear()
+            for key in self.people:
+                if countr == int(number) :
+                    while True:
+                        number_phone = input("How many number do you want to add : ")
+                        if not number.isnumeric():
+                            clear()
+                            print("Incorrect input!\ntry again")
+                            continue
+                        break
+                        
+                    list_phone = []
+                    for contr in range(int(number_phone)):
+                        list_phone.append(input("please enter the new number : "))
+                    self.people[key] = [self.people[key][0],list_phone]
+                    
+                    print("phone number edited")
+                
+                countr+=1
+                
+            self.show_notebook()
+            time.sleep(3)
+    
+    
     def sort(self):
         self.display_sort_menu()
         
@@ -241,6 +417,9 @@ class Notebook:
 ################################################################  MAIN MENU
 ################################################################        
 
+   
+    
+    
     def desplay_menu(self):
 
         print("*************************************************")

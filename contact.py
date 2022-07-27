@@ -1,5 +1,4 @@
 from person import Person   
-
 import time
 from valiedInput import *
 from colortype import *
@@ -47,7 +46,7 @@ class Notebook:
             while yes_no == "Y" :
                 if (yes_no == "Y"):
                     email = input("please enter your email : ")
-                    if not re.search("^[a-zA-Z0-9]{5,}@(gmail|yahoo)\.com$",email):
+                    if not re.search("^[a-zA-Z0-9]{5,}@(gmail|yahoo|email)\.com$",email):
                         prRed("Sorry, the email is invalid !!!")
                         continue
                     else:
@@ -331,7 +330,7 @@ class Notebook:
             
             while True and countr == number:
                 new_email = input("please enter the new email : ")
-                if not re.search("^[a-zA-Z0-9]{5,}@(gmail|yahoo)\.com$",new_email):
+                if not re.search("^[a-zA-Z0-9]{5,}@(gmail|yahoo|email)\.com$",new_email):
                     prRed("Sorry, the email is invalid !!!")
                     continue
                 self.people[key] = [new_email,self.people[key][1]]
@@ -426,6 +425,8 @@ class Notebook:
 
         elif number == 6:
             self.show_notebook()
+            input("Enter Any key to Return Previous page : ")
+            clear()
             
         elif number == 7:
             self.getfile()

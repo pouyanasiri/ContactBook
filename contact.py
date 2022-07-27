@@ -1,14 +1,9 @@
 from person import Person   
-from os import stat, system, name
-import time
 
-def clear():
-      
-    if name == 'nt':
-        _ = system('cls')
-  
-    else:
-        _ = system('clear')
+import time
+from valiedInput import *
+from colortype import *
+import re
 
 class Notebook:
 
@@ -19,13 +14,17 @@ class Notebook:
 ################################################################  SHOW CONTACTS        
 ################################################################        
         
-    def show_notebook(self):
+    def show_notebook(self):        
+        
         countr = 1
         for key , value in self.people.items():
-            print (f"{countr} --> name : {key} , email : {value[0]} , phone(phones) : {value[1]} ")
+            prCyan (f"{countr} --> name : {key} , email : {value[0]} , phone(phones) : {value[1]} ")
             countr+=1
         if len(self.people) == 0 :
-            print("the note book is empty")
+            prRed("The Note Book is Empty")
+            time.sleep(3)
+            clear()
+            return 0
         time.sleep(3)
         
         
@@ -40,21 +39,26 @@ class Notebook:
         clear()
         last_name = input("please enter your last name : ").title()
         clear()
-        yes_no = "n"
+        yes_no = "N"
         email = "______"
-        while(yes_no != "n" or yes_no != "y"):
-            yes_no = input("Do you want to add email? (y/n) : ")
+        while(yes_no != "N" or yes_no != "Y"):
+            yes_no = input("Do you want to add email? (y/n) : ").capitalize()[0]
+            
+            while yes_no == "Y" :
+                if (yes_no == "Y"):
+                    email = input("please enter your email : ")
+                    if not re.search("^[a-zA-Z0-9]{5,}@(gmail|yahoo)\.com$",email):
+                        prRed("Sorry, the email is invalid !!!")
+                        continue
+                    else:
+                        break    
+            if(yes_no != "Y" and yes_no != "N"):
+                prRed("Wrong Input!")
+                continue
+            break        
         
-            if (yes_no == "y"):
-                email = input("please enter your email : ")
-                if "@" not in email:
-                    print("Sorry, the email is invalid !!!")
-                    continue
-                
-            break
-                    
         my_person = Person(first_name , last_name , email) 
-
+        clear()
         my_person.add_phone_numbers()
 
         key = my_person.get_first_name()+ " " + my_person.get_last_name()
@@ -66,12 +70,12 @@ class Notebook:
 ################################################################                
 
     def display_sort_menu(self):
-        print("      Sort menu\n")
-        print("***1 : Sort by name")
-        print("***2 : Back")
-        print("***3 : Exit")
+        prGreen("      Sort menu\n")
+        prGreen("***1 : Sort by name")
+        prGreen("***2 : Back")
+        prGreen("***3 : Exit")
         
-        number = int(input("Enter your choice ? "))
+        number = valiedInput(3)
         clear()
         if number == 1:
             self.sort_by_name()
@@ -81,17 +85,19 @@ class Notebook:
 
         elif number == 3:
             exit()
-
-        else:
-            print("Wrong input ")
-
+        input("Enter Any key to Return Previous page : ")
+        clear()
         self.display_sort_menu()
+        
         
 ################################################################            
 ################################################################  SORT CONTACTS
 ################################################################      
   
     def sort_by_name(self):
+        if len(self.people.keys()) == 0:
+            prRed("Note Book is Empty")
+            return
         countr = 1
         for key in sorted(self.people.keys()):
             print (f"{countr} : \nname : {key} \nemail : {self.people[key][0]}\nphone : {self.people[key][1]}")
@@ -106,16 +112,16 @@ class Notebook:
 ################################################################        
 
     def display_search_menu(self):
-        print("      Search menu\n")
-        print("***1 : Search by first name")
-        print("***2 : Search by last name")
-        print("***3 : Search by whole name")
-        print("***4 : Search by email")
-        print("***5 : Search by number")
-        print("***6 : Back")
-        print("***7 : Exit")
+        prGreen("      Search menu\n")
+        prGreen("***1 : Search by first name")
+        prGreen("***2 : Search by last name")
+        prGreen("***3 : Search by whole name")
+        prGreen("***4 : Search by email")
+        prGreen("***5 : Search by number")
+        prGreen("***6 : Back")
+        prGreen("***7 : Exit")
 
-        number = int(input("Enter your choice ? "))
+        number = valiedInput(7)
         clear()
         
         if number == 1:
@@ -138,9 +144,10 @@ class Notebook:
 
         elif number == 7:
             exit()
-        else:
-            print("Wrong input ")
-
+            
+        input("Enter Any key to Return Previous page : ")
+        clear()
+        
         self.display_search_menu()
         
 ################################################################            
@@ -155,7 +162,7 @@ class Notebook:
                 print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
-            print("Not found")
+            prRed("Not found")
 
     def search_by_last_name(self):
         last_name = input("Enter the last name of your contact : ").title()
@@ -165,7 +172,7 @@ class Notebook:
                 print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
-            print("Not found")
+            prRed("Not found")
 
 
     def search_by_whole_name(self):
@@ -176,7 +183,7 @@ class Notebook:
                 print(f"\n\tE-mail : {self.people[key][0]}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
-            print("Not found")
+            prRed("Not found")
 
     def search_by_email(self):
         email = input("Enter the Email of your contact : ")
@@ -186,7 +193,7 @@ class Notebook:
                 print(f"\n\tname : {key}  phone numbers : {self.people[key][1]}\n")
                 find=1
         if find == 0:
-            print("Not found")
+            prRed("Not found")
 
 
     def search_by_phone_number(self):
@@ -197,39 +204,30 @@ class Notebook:
                 find=1
                 print(f"\n\tname : {key}  email : {self.people[key][0]}\n")
         if find == 0:
-            print("Not found")
+            prRed("Not found")
 
 ################################################################            
 ################################################################  REMOVE CONTACT
 ################################################################   
      
     def remove_contact(self):
-        self.show_notebook()
-        number = input("Please enter the number of contact (Between the list above) :‌ ")
-        check_correct_number = 0
-        if not number.isnumeric():
-            check_correct_number = 1
-        elif not int(number) <= len(self.people):
-            check_correct_number = 1
-        
-        if check_correct_number == 1:
-            print("the number is incorrct!\n try again !!!")
-            time.sleep(2)
-            clear()
-            self.remove_contact()
-        
-        else :
-            countr = 1
-            clear()
-            for key in self.people:
-                if countr == int(number) :
-                    del self.people[key]
-                    print("the contact is deleted !")
-                    time.sleep(2)
-                    break
-                countr+=1
-            self.show_notebook()
-            time.sleep(3)
+        if self.show_notebook() == 0:
+            return
+        prRed("Are You Sure ? \nYou Can Enter 0 to Cancel This")
+        number = valiedInput(len(self.people))
+        if number == 0:
+            return
+        countr = 1
+        clear()
+        for key in self.people:
+            if countr == int(number) :
+                del self.people[key]
+                print("the contact is deleted !")
+                time.sleep(2)
+                break
+            countr+=1
+        time.sleep(3)
+        clear()
             
 
 
@@ -239,33 +237,32 @@ class Notebook:
     
     
     def display_edit_menu(self):
-        print("      Edit menu\n")
-        print("*** 1 : Edit first name")
-        print("*** 2 : Edit last name")
-        print("*** 3 : Edit email")
-        print("*** 4 : Edit phone number")
-        print("*** 5 : Back ")
-        print("*** 6 : Exit ")
+        prGreen("      Edit menu\n")
+        prGreen("*** 1 : Edit first name")
+        prGreen("*** 2 : Edit last name")
+        prGreen("*** 3 : Edit email")
+        prGreen("*** 4 : Edit phone number")
+        prGreen("*** 5 : Back ")
+        prGreen("*** 6 : Exit ")
         
-        number = input("Enter your choice ? ")
+        number = valiedInput(6)
         clear()
-        if number == "1" :
+        if number == 1 :
             self.edit_first_name()
         
-        elif number == "2" :
+        elif number == 2 :
             self.edit_last_name()
             
-        elif number == "3" :
+        elif number == 3 :
             self.edit_email()
         
-        elif number == "4" :
+        elif number == 4 :
             self.edit_phone_numbers()
             
-
-        elif number == "5" :
+        elif number == 5 :
             return
 
-        elif number == "6" :
+        elif number == 6 :
             exit()
         else :
             print("Incorrect input !\ntry again")
@@ -274,166 +271,143 @@ class Notebook:
         
         
     def edit_first_name(self):
-        self.show_notebook()
-        number = input("Please enter the number of contact (Between the list above) :‌ ")
-        check_correct_number = 0
-        if not number.isnumeric():
-            check_correct_number = 1
-        elif not int(number) <= len(self.people):
-            check_correct_number = 1
-        
-        if check_correct_number == 1:
-            print("the number is incorrct!\n try again !!!")
-            time.sleep(2)
-            clear()
-            self.edit_first_name()
-        
-        else :
-            countr = 1
-            clear()
-            for key in self.people:
-                if countr == int(number) :
-                    new_name = input("please enter the new first name : ").title()
-                    new_name = new_name + key[key.find(" ") + 1 :]
-                    self.people[new_name] = self.people[key]
-                    del self.people[key]
-                    print("the contact is edited !")
-                    time.sleep(2)
-                    break
-                countr+=1
-            self.show_notebook()
-            time.sleep(3)
+        if self.show_notebook() == 0:
+            return
+        prRed("Are You Sure ? \nYou Can Enter 0 to Cancel This")
+        number = valiedInput(len(self.people))
+        if number == 0:
+            return
+        countr = 1
+        clear()
+        for key in self.people:
+            if countr == number :
+                new_name = input("please enter the new first name : ").title()
+                new_name = new_name + " "+ key[key.find(" ") + 1 :]
+                temp = self.people[key]  
+                del self.people[key]
+                self.people[new_name] = temp
+                print("the contact is edited !")
+                time.sleep(2)
+                break
+            countr+=1
+        time.sleep(3)
+        clear()
         
     def edit_last_name(self):
-        self.show_notebook()
-        number = input("Please enter the number of contact (Between the list above) :‌ ")
-        check_correct_number = 0
-        if not number.isnumeric():
-            check_correct_number = 1
-        elif not int(number) <= len(self.people):
-            check_correct_number = 1
-        
-        if check_correct_number == 1:
-            print("the number is incorrct!\n try again !!!")
-            time.sleep(2)
-            clear()
-            self.edit_last_name()
-        
-        else :
-            countr = 1
-            clear()
-            for key in self.people:
-                if countr == int(number) :
-                    new_name = input("please enter the new last name : ").title()
-                    new_name = key[0 : key.find(" ")] + new_name
-                    self.people[new_name] = self.people[key]
-                    del self.people[key]
-                    print("the contact is edited !")
-                    time.sleep(2)
-                    break
-                countr+=1
-            self.show_notebook()
-            time.sleep(3)
+        if self.show_notebook() == 0:
+            return
+        prRed("Are You Sure ? \nYou Can Enter 0 to Cancel This")
+        number = valiedInput(len(self.people))
+        if number == 0:
+            return
+        countr = 1
+        clear()
+        for key in self.people:
+            if countr == int(number) :
+                new_name = input("please enter the new last name : ").title()
+                new_name = key[0 : key.find(" ")] + " "+new_name
+                temp = self.people[key]  
+                del self.people[key]
+                self.people[new_name] = temp
+                print("the contact is edited !")
+                time.sleep(2)
+                break
+            countr+=1
+        time.sleep(3)
+        clear()
         
             
     def edit_email(self):
-        self.show_notebook()
-        number = input("Please enter the number of contact (Between the list above) :‌ ")
-        check_correct_number = 0
-        if not number.isnumeric():
-            check_correct_number = 1
-        elif not int(number) <= len(self.people):
-            check_correct_number = 1
         
-        if check_correct_number == 1:
-            print("the number is incorrct!\n try again !!!")
-            time.sleep(2)
-            clear()
-            self.edit_email()
-        
-        else :
-            countr = 1
-            clear()
-            for key in self.people:
-                if countr == int(number) :
-                    while True:
-                        new_email = input("please enter the new email : ")
-                        if "@" in new_email:
-                            break
-                        print("Incorrect email !\ntry again")
-                    self.people[key] = [new_email,self.people[key][1]]
-                    print("email edited")
-                    break
-                countr+=1
-            self.show_notebook()
-            time.sleep(3)
-        
+        if self.show_notebook() == 0:
+            return
+        prRed("Are You Sure ? \nYou Can Enter 0 to Cancel This")
+        number = valiedInput(len(self.people))
+        if number == 0:
+            return
+        countr = 1
+        clear()
+        for key in self.people:
+            
+            while True and countr == number:
+                new_email = input("please enter the new email : ")
+                if not re.search("^[a-zA-Z0-9]{5,}@(gmail|yahoo)\.com$",new_email):
+                    prRed("Sorry, the email is invalid !!!")
+                    continue
+                self.people[key] = [new_email,self.people[key][1]]
+                print("email edited")
+                time.sleep(3)
+                break
+            countr+=1
+        clear()
     
     def edit_phone_numbers(self):
-        self.show_notebook()
-        number = input("Please enter the number of contact (Between the list above) :‌ ")
-        check_correct_number = 0
-        if not number.isnumeric():
-            check_correct_number = 1
-        elif not int(number) <= len(self.people):
-            check_correct_number = 1
-        
-        if check_correct_number == 1:
-            print("the number is incorrct!\n try again !!!")
-            time.sleep(2)
-            clear()
-            self.edit_phone_numbers()
-        
-        else :
-            countr = 1
-            clear()
-            for key in self.people:
-                if countr == int(number) :
-                    while True:
-                        number_phone = input("How many number do you want to add : ")
-                        if not number.isnumeric():
-                            clear()
-                            print("Incorrect input!\ntry again")
-                            continue
-                        break
-                        
-                    list_phone = []
-                    for contr in range(int(number_phone)):
-                        list_phone.append(input("please enter the new number : "))
-                    self.people[key] = [self.people[key][0],list_phone]
+        if self.show_notebook() == 0:
+            return
+        prRed("Are You Sure ? \nYou Can Enter 0 to Cancel This")
+        number = valiedInput(len(self.people))
+        if number == 0:
+            return
+        countr = 1
+        clear()
+        for key in self.people:
+            if countr == int(number) :
+                print("How many number do you want to add : ")
+                number_phone = valiedInput()
                     
-                    print("phone number edited")
-                
-                countr+=1
-                
-            self.show_notebook()
-            time.sleep(3)
-    
+                list_phone = []
+                for i in range(number_phone):
+                    while True:
+                        phone = input(f"New Number {i+1} : ")
+                        if re.search("09\d{9}",phone) and len(phone)==11:
+                            list_phone.append(phone)
+                            break
+                        else:
+                            prRed("Wrong input!\n the length of phone number is 11 and start with 09")
+            
+            countr+=1
+        self.people[key] = [self.people[key][0],list_phone]                
+        print("phone number edited") 
+        time.sleep(3)
+        clear()
+    ########################################################################
+    ########################################################################  SORT CAONTACTS
+    ########################################################################
     
     def sort(self):
         self.display_sort_menu()
+    
+    def getfile(self):
+        with open(f"Contacts/notebook.txt" , "a") as myfile :
+            countr = 1
+            for key , value in self.people.items():
+                myfile.write(f"{countr} --> name : {key} , email : {value[0]} , phone(phones) : {value[1]} \n")
+                countr+=1
+            if len(self.people) == 0:
+                myfile.write("EMPTY!\n")
+        prCyan("Note Book is Ready!")
+        time.sleep(2)
+        clear()
         
 ################################################################            
 ################################################################  MAIN MENU
 ################################################################        
 
-   
-    
-    
     def desplay_menu(self):
 
-        print("*************************************************")
-        print("* \tWelcome to your contact notebook        *")
-        print("* 1 : Add contact                               *")
-        print("* 2 : Edit contact                              *")
-        print("* 3 : Delete contact                            *")
-        print("* 4 : Sort your notebook                        *")
-        print("* 5 : Search to find your contact               *")
-        print("* 6 : Show your notebook                        *")
-        print("* 7 : Exit                                      *")
-        print("*************************************************")
+        prGreen("*************************************************")
+        prGreen("* \tWelcome to your contact notebook         *")
+        prGreen("* 1 : Add contact                               *")
+        prGreen("* 2 : Edit contact                              *")
+        prGreen("* 3 : Delete contact                            *")
+        prGreen("* 4 : Sort your notebook                        *")
+        prGreen("* 5 : Search to find your contact               *")
+        prGreen("* 6 : Show your notebook                        *")
+        prGreen("* 7 : Get File Of Contacts                      *")
+        prGreen("* 8 : Exit                                      *")
+        prGreen("*************************************************")
 
-        number = int(input("Enter your choice ? "))
+        number = valiedInput(8)
 
         if number == 1:
             self.add_contact()
@@ -452,19 +426,11 @@ class Notebook:
 
         elif number == 6:
             self.show_notebook()
-
+            
         elif number == 7:
+            self.getfile()
+        
+        elif number == 8:
             exit()
             
-        else:
-            print("Wrong input")
-
         self.desplay_menu()
-            
-def main():
-    my_notebook=Notebook()  
-    my_notebook.desplay_menu()
-
-if __name__ == '__main__':
-    main()
-    

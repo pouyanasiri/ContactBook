@@ -1,3 +1,8 @@
+import re
+from time import sleep
+from colortype import prCyan, prRed
+from valiedInput import *
+
 class Person():
      
     def __init__(self,first_name,last_name,email) :
@@ -6,10 +11,21 @@ class Person():
         self.email = email
         self.phone_numbers = list()
     def add_phone_numbers(self):
-        count = int(input("How many numbers do you want to add for your contact : "))
-        for i in range(1,count+1):
-            self.phone_numbers.append(input(f"Number {i} : "))
+        print("How many numbers do you want to add for your contact : ")
+        count = valiedInput()
+        for i in range(count):
+            while True:
+                phone = input(f"Number {i+1} : ")
+                if re.search("09\d{9}",phone) and len(phone)==11:
+                    self.phone_numbers.append(phone)
+                    break
+                else:
+                    prRed("Wrong input!\n the length of phone number is 11 and start with 09")
         
+        prCyan("Contact Saved ")
+        sleep(2)
+        clear()
+    
     def get_first_name(self):
         return self.first_name
     

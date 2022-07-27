@@ -21,10 +21,9 @@ class Notebook:
             countr+=1
         if len(self.people) == 0 :
             prRed("The Note Book is Empty")
-            time.sleep(3)
+            input("Enter Any key to Return Previous page : ")
             clear()
             return 0
-        time.sleep(3)
         
         
 
@@ -221,11 +220,10 @@ class Notebook:
         for key in self.people:
             if countr == int(number) :
                 del self.people[key]
-                print("the contact is deleted !")
-                time.sleep(2)
+                print("Contact Deleted !")
+                time.sleep(1.5)
                 break
             countr+=1
-        time.sleep(3)
         clear()
             
 
@@ -285,11 +283,10 @@ class Notebook:
                 temp = self.people[key]  
                 del self.people[key]
                 self.people[new_name] = temp
-                print("the contact is edited !")
-                time.sleep(2)
+                print("Contact Edited!")
+                time.sleep(1.5)
                 break
             countr+=1
-        time.sleep(3)
         clear()
         
     def edit_last_name(self):
@@ -308,11 +305,10 @@ class Notebook:
                 temp = self.people[key]  
                 del self.people[key]
                 self.people[new_name] = temp
-                print("the contact is edited !")
-                time.sleep(2)
+                print("Contact Edited!")
+                time.sleep(1.5)
                 break
             countr+=1
-        time.sleep(3)
         clear()
         
             
@@ -334,8 +330,8 @@ class Notebook:
                     prRed("Sorry, the email is invalid !!!")
                     continue
                 self.people[key] = [new_email,self.people[key][1]]
-                print("email edited")
-                time.sleep(3)
+                print("Email Edited!")
+                time.sleep(1.5)
                 break
             countr+=1
         clear()
@@ -366,8 +362,8 @@ class Notebook:
             
             countr+=1
         self.people[key] = [self.people[key][0],list_phone]                
-        print("phone number edited") 
-        time.sleep(3)
+        print("Phone Number Edited") 
+        time.sleep(1.5)
         clear()
     ########################################################################
     ########################################################################  SORT CAONTACTS
@@ -433,5 +429,5 @@ class Notebook:
         
         elif number == 8:
             exit()
-            
+                
         self.desplay_menu()

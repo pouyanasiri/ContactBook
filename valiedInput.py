@@ -8,7 +8,7 @@ def valiedInput(number=inf):
     while(True):
         try :
             if number != inf:
-                choice = int(input("Enter your choice : "))
+                choice = int(input("Enter your choice (Select Your Number) : "))
                 if choice > number or choice < 0:
                     prRed("Wrong Range of input ")
                     continue

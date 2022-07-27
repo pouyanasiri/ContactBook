@@ -1,4 +1,4 @@
-from contact import Notebook
+from contact import *
 def main():
     my_notebook=Notebook()  
     my_notebook.desplay_menu()
